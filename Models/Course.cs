@@ -16,6 +16,7 @@ namespace BigSchool.Models
         [StringLength (255)]
         public string Place { get; set; }
         public string DataTime { get; set; }
+
         public string CategoryId { get; set; }
     }
 
