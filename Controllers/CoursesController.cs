@@ -16,13 +16,26 @@ namespace BigSchool.Controllers
             _dbContext = new ApplicationDbContext();
         }
         // GET: Courses
+        [Authorize]
+        [HttpPost]
         public ActionResult Create()
         {
             var viewModel = new CourseViewModel
             {
                 Categories = _dbContext.Categories.ToList()
             };
-            return View();
+            return View(viewModel);
+        }
+        public ActionResult Create(CoursesViewModel viewModel)
+        {
+            var course = new Course
+            {
+                LecturerId = User.Identity.GetUserId(),
+                DataTime = viewModel.GetDateTime(),
+                CategoryId = viewModel.Place
+            };
+            _dbContext.Courses.Add(course);
+            _dbContext.SaveChanges();
         }
     }
 }
